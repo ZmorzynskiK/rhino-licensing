@@ -124,6 +124,7 @@
     <Compile Include="Dialogs\OpenFileDialog.cs" />
     <Compile Include="Dialogs\SaveFileDialog.cs" />
     <Compile Include="Extensions\ContainerExtensions.cs" />
+    <Compile Include="Extensions\LicenseExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Factories\IDialogFactory.cs" />

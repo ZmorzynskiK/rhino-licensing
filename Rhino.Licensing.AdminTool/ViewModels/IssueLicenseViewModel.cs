@@ -20,7 +20,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 
             CurrentLicense = new License
             {
-                LicenseType = LicenseType.Trial,
+                LicenseType = LicenseType.Standard,
                 ExpirationDate = DateTime.Now.AddDays(Settings.Default.DefaultTrialDays).Date
             };
         }
