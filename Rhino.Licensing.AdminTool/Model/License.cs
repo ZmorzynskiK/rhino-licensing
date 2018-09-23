@@ -74,5 +74,40 @@ namespace Rhino.Licensing.AdminTool.Model
                 NotifyOfPropertyChange(() => Data);
             }
         }
-    }
+
+		public virtual string HWID
+		{
+			get
+			{
+				foreach(var userData in Data)
+				{
+					if(userData.Key.Equals(Extensions.LicenseExtensions.HWIDUserDataKey, System.StringComparison.OrdinalIgnoreCase))
+						return userData.Value;
+				}
+				return "";
+			}
+			set
+			{
+				for(int i = 0; i < Data.Count; ++i)
+				{
+					var ud = Data[i];
+					if(ud.Key.Equals(Extensions.LicenseExtensions.HWIDUserDataKey, System.StringComparison.OrdinalIgnoreCase))
+					{
+						ud.Value = value;
+						Data[i] = ud;
+						NotifyOfPropertyChange(() => HWID);
+						return;
+					}
+				}
+				// add new user data
+				Data.Add(new UserData()
+				{
+					Key = Extensions.LicenseExtensions.HWIDUserDataKey,
+					Value = value
+				});
+
+				NotifyOfPropertyChange(() => HWID);
+			}
+		}
+	}
 }

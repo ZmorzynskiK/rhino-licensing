@@ -95,6 +95,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding Path=OwnerName}" Header="Owner" Width="150" />
                             <GridViewColumn DisplayMemberBinding="{Binding Path=LicenseType}" Header="LicenseType" Width="150" />
                             <GridViewColumn DisplayMemberBinding="{Binding Path=ExpirationDate}" Header="Expiration Date" Width="150" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=HWID}" Header="HWID" Width="250" />
                         </GridView>
                     </ListView.View>
                 </ListView>
