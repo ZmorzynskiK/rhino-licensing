@@ -10,8 +10,8 @@
         /// </summary>
         /// <param name="publicKey">public key</param>
         /// <param name="license">license content</param>
-        public StringLicenseValidator(string publicKey, string license)
-            : base(publicKey)
+        public StringLicenseValidator(ILogService log, string publicKey, string license)
+            : base(log, publicKey)
         {
             License = license;
         }

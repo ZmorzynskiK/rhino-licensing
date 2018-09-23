@@ -17,8 +17,8 @@ namespace Rhino.Licensing
         /// </summary>
         /// <param name="publicKey">public key</param>
         /// <param name="licensePath">path to license file</param>
-        public LicenseValidator(string publicKey, string licensePath)
-            : base(publicKey)
+        public LicenseValidator(ILogService log, string publicKey, string licensePath, bool enableDiscovery = true)
+            : base(log, publicKey, enableDiscovery)
         {
             this.licensePath = licensePath;
         }
@@ -30,8 +30,8 @@ namespace Rhino.Licensing
         /// <param name="licensePath">path to license file</param>
         /// <param name="licenseServerUrl">license server endpoint address</param>
         /// <param name="clientId">Id of the license holder</param>
-        public LicenseValidator(string publicKey, string licensePath, string licenseServerUrl, Guid clientId)
-            : base(publicKey, licenseServerUrl, clientId)
+        public LicenseValidator(ILogService log, string publicKey, string licensePath, string licenseServerUrl, Guid clientId)
+            : base(log, publicKey, licenseServerUrl, clientId)
         {
             this.licensePath = licensePath;
         }
@@ -54,7 +54,7 @@ namespace Rhino.Licensing
                 catch (Exception e)
                 {
                     inMemoryLicense = value;
-                    Log.Warn("Could not write new license value, using in memory model instead", e);
+                    _log.Warn("Could not write new license value, using in memory model instead", e);
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace Rhino.Licensing
         {
             if (File.Exists(licensePath) == false)
             {
-                Log.WarnFormat("Could not find license file: {0}", licensePath);
+				_log.WarnFormat("Could not find license file: {0}", licensePath);
                 throw new LicenseFileNotFoundException();
             }
 

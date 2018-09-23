@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Linq;
-using log4net;
 
 namespace Rhino.Licensing.Discovery
 {
@@ -13,11 +12,16 @@ namespace Rhino.Licensing.Discovery
 	///</summary>
 	public class DiscoveryHost : IDisposable
 	{
+		private ILogService _log;
 		private Socket socket;
 		private readonly byte[] buffer = new byte[1024*4];
 		private const string AllHostsMulticastIP = "224.0.0.1";
 		private const int DiscoveryPort = 12391;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(DiscoveryHost));
+
+		public DiscoveryHost(ILogService log)
+		{
+			_log = log;
+		}
 
 		///<summary>
 		/// Starts listening to network notifications
@@ -57,7 +61,7 @@ namespace Rhino.Licensing.Discovery
 	        }
 	        catch (SocketException ex)
 	        {
-                Log.Warn($"Setting socket options failed for address: {address?.Address}", ex);
+                _log.Warn($"Setting socket options failed for address: {address?.Address}", ex);
 	        }
 	    }
 

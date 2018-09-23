@@ -19,12 +19,14 @@ namespace Rhino.Licensing
         private readonly List<LicenseValidator> availableLicenses = new List<LicenseValidator>();
         private readonly Dictionary<string, KeyValuePair<DateTime, LicenseValidator>> leasedLicenses = new Dictionary<string, KeyValuePair<DateTime, LicenseValidator>>();
         private readonly string state;
+		private readonly ILogService _log;
 
-        /// <summary>
-        /// Creates a new instance of <seealso cref="LicensingService"/>.
-        /// </summary>
-        public LicensingService()
+		/// <summary>
+		/// Creates a new instance of <seealso cref="LicensingService"/>.
+		/// </summary>
+		public LicensingService(ILogService log, bool enableDiscovery)
         {
+			_log = log;
             if (SoftwarePublicKey == null)
                 throw new InvalidOperationException("SoftwarePublicKey must be set before starting the service");
 
@@ -36,7 +38,7 @@ namespace Rhino.Licensing
 
             EnsureLicenseDirectoryExists(licensesDirectory);
 
-            ReadAvailableLicenses(licensesDirectory);
+            ReadAvailableLicenses(licensesDirectory, enableDiscovery);
 
             ReadInitialState();
         }
@@ -72,12 +74,12 @@ namespace Rhino.Licensing
             }
         }
 
-        private void ReadAvailableLicenses(string licensesDirectory)
+        private void ReadAvailableLicenses(string licensesDirectory, bool enableDiscovery)
         {
             foreach (var license in Directory.GetFiles(licensesDirectory, "*.xml"))
             {
                 var set = new HashSet<Guid>();
-                var validator = new LicenseValidator(SoftwarePublicKey, license)
+                var validator = new LicenseValidator(_log, SoftwarePublicKey, license, enableDiscovery)
                 {
                     DisableFloatingLicenses = true
                 };
