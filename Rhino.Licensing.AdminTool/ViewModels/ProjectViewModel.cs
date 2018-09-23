@@ -127,6 +127,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             if (dialogResult.GetValueOrDefault(false))
             {
                 CurrentProject.Product.IssuedLicenses.Add(vm.CurrentLicense);
+				Save();
             }
         }
 
@@ -158,7 +159,22 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             }
         }
 
-        public virtual void CopyToClipboard(string text)
+		public virtual bool CanRemoveSelected()
+		{
+			return CurrentProject != null && SelectedLicense != null;
+		}
+
+		[AutoCheckAvailability]
+		public virtual void RemoveSelected()
+		{
+			if(CurrentProject == null || SelectedLicense == null)
+				return;
+
+			CurrentProject.Product.IssuedLicenses.Remove(SelectedLicense);
+			Save();
+		}
+
+		public virtual void CopyToClipboard(string text)
         {
             try
             {

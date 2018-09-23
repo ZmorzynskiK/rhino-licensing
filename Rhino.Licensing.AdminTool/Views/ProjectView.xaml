@@ -81,10 +81,12 @@
                     </DockPanel>
                 </Grid>
             </GroupBox>
-        
-            <GroupBox Header="Issued Licenses" Grid.Row="1">
 
-                <ListView ItemsSource="{Binding CurrentProject.Product.IssuedLicenses}"
+            <GroupBox Header="Issued Licenses" Grid.Row="1">
+                <DockPanel LastChildFill="True">
+                    <Button DockPanel.Dock="Bottom" Content="Remove Selected" cal:Message.Attach="[Event Click]=[Action RemoveSelected]" Margin="5" Width="100" />
+
+                    <ListView ItemsSource="{Binding CurrentProject.Product.IssuedLicenses}"
                           SelectedItem="{Binding SelectedLicense, Mode=TwoWay}"
                           IsSynchronizedWithCurrentItem="True">
 
@@ -96,7 +98,9 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+
                 
+                </DockPanel>
             </GroupBox>
         </Grid>
     </DockPanel>
