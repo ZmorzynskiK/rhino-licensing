@@ -82,6 +82,7 @@
     <Compile Include="ILogService.cs" />
     <Compile Include="LicenseExpiredException.cs" />
     <Compile Include="InvalidationType.cs" />
+    <Compile Include="StringBuilderLogService.cs" />
     <Compile Include="StringLicenseValidator.cs" />
     <Compile Include="ILicensingService.cs" />
     <Compile Include="ISubscriptionLicensingService.cs" />

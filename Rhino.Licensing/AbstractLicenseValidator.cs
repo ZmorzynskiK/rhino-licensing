@@ -272,7 +272,9 @@ namespace Rhino.Licensing
 					_log.WarnFormat("Failed validating license:\r\n{0}", License);
                     return false;
                 }
-				_log.InfoFormat("License expiration date is {0}", ExpirationDate);
+				if(ExpirationDate != DateTime.MaxValue)
+					_log.InfoFormat("License expiration date is {0}", ExpirationDate);
+				
 
                 bool result;
                 if (LicenseType == LicenseType.Subscription)

@@ -24,7 +24,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         private string _filePath;
 
         public const string ProjectFileFilter = "Rhino Project|*.rlic";
-        public const string LicenseFileFilter = "Rhino License|*.xml";
+        public const string LicenseFileFilter = "Rhino License|*.key";
 
         public ProjectViewModel(
             IProjectService projectService,
