@@ -8,7 +8,7 @@ namespace Rhino.Licensing.Tests
         [Fact]
         public void Will_tell_that_we_are_in_invalid_state()
         {
-            var validator = new LicenseValidator(public_only, Path.GetTempFileName());
+            var validator = new LicenseValidator(new DebugLogService(), public_only, Path.GetTempFileName());
             Assert.Throws<LicenseNotFoundException>(() => validator.AssertValidLicense());
         }
 
@@ -16,7 +16,7 @@ namespace Rhino.Licensing.Tests
         [Fact]
         public void Will_fail_if_file_is_not_there()
         {
-            var validator = new LicenseValidator(public_only, "not_there");
+            var validator = new LicenseValidator(new DebugLogService(), public_only, "not_there");
             Assert.Throws<LicenseFileNotFoundException>(() => validator.AssertValidLicense());
         }
     }

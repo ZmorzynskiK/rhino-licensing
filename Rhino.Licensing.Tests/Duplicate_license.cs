@@ -20,7 +20,7 @@ namespace Rhino.Licensing.Tests
 
 			var wait = new ManualResetEvent(false);
 
-			var validator = new LicenseValidator(public_only, path)
+			var validator = new LicenseValidator(new DebugLogService(), public_only, path)
 			{
 				LeaseTimeout = TimeSpan.FromSeconds(1)
 			};
@@ -29,7 +29,7 @@ namespace Rhino.Licensing.Tests
 			validator.MultipleLicensesWereDiscovered += (sender, args) => wait.Set();
 			validator.AssertValidLicense();
 
-			var validator2 = new LicenseValidator(public_only, path);
+			var validator2 = new LicenseValidator(new DebugLogService(), public_only, path);
 			validator2.AssertValidLicense();
 
 			Assert.True(wait.WaitOne(TimeSpan.FromSeconds(100)));

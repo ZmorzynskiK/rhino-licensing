@@ -38,7 +38,7 @@ namespace Rhino.Licensing.Tests
             try
             {
 
-                var validator = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
+                var validator = new LicenseValidator(new DebugLogService(), public_only, fileName, address, Guid.NewGuid());
                 validator.AssertValidLicense();
             }
             finally
@@ -65,10 +65,10 @@ namespace Rhino.Licensing.Tests
 
             try
             {
-                var validator = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
+                var validator = new LicenseValidator(new DebugLogService(), public_only, fileName, address, Guid.NewGuid());
                 validator.AssertValidLicense();
 
-                var validator2 = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
+                var validator2 = new LicenseValidator(new DebugLogService(), public_only, fileName, address, Guid.NewGuid());
                 Assert.Throws<FloatingLicenseNotAvailableException>(() => validator2.AssertValidLicense());
             }
             finally

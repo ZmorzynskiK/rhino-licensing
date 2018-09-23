@@ -18,7 +18,7 @@ namespace Rhino.Licensing.Tests
             var path = Path.GetTempFileName();
             File.WriteAllText(path, key);
 
-            var validator = new LicenseValidator(public_only, path);
+            var validator = new LicenseValidator(new DebugLogService(), public_only, path);
             validator.AssertValidLicense();
             
             Assert.Equal(guid, validator.UserId);
@@ -43,7 +43,7 @@ namespace Rhino.Licensing.Tests
             var path = Path.GetTempFileName();
             File.WriteAllText(path, key);
 
-            var validator = new LicenseValidator(public_only, path);
+            var validator = new LicenseValidator(new DebugLogService(), public_only, path);
             validator.AssertValidLicense();
 
             Assert.Equal("llb", validator.LicenseAttributes["prof"]);
@@ -70,7 +70,7 @@ namespace Rhino.Licensing.Tests
             var path = Path.GetTempFileName();
             File.WriteAllText(path, key);
 
-            var validator = new LicenseValidator(public_only, path);
+            var validator = new LicenseValidator(new DebugLogService(), public_only, path);
             Assert.Throws<LicenseExpiredException>(() => validator.AssertValidLicense());
         }
 
@@ -100,7 +100,7 @@ namespace Rhino.Licensing.Tests
             var path = Path.GetTempFileName();
             File.WriteAllText(path, hackedLicense);
 
-            var validator = new LicenseValidator(public_only, path);
+            var validator = new LicenseValidator(new DebugLogService(), public_only, path);
             Assert.Throws<LicenseNotFoundException>(() => validator.AssertValidLicense());
         }
     }

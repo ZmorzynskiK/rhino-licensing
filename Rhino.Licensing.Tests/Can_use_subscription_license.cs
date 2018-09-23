@@ -38,7 +38,7 @@ namespace Rhino.Licensing.Tests
             File.WriteAllText(path, license);
 
 
-            Assert.DoesNotThrow(() => new LicenseValidator(public_only, path).AssertValidLicense());	
+            Assert.DoesNotThrow(() => new LicenseValidator(new DebugLogService(), public_only, path).AssertValidLicense());	
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace Rhino.Licensing.Tests
             File.WriteAllText(path, license);
 
 
-            Assert.DoesNotThrow(() => new LicenseValidator(public_only, path)
+            Assert.DoesNotThrow(() => new LicenseValidator(new DebugLogService(), public_only, path)
                                         {
                                             SubscriptionEndpoint = "http://localhost/"+Guid.NewGuid()
                                         }.AssertValidLicense());
@@ -74,7 +74,7 @@ namespace Rhino.Licensing.Tests
             File.WriteAllText(path, license);
 
 
-            Assert.Throws<LicenseExpiredException>(() => new LicenseValidator(public_only, path)
+            Assert.Throws<LicenseExpiredException>(() => new LicenseValidator(new DebugLogService(), public_only, path)
             {
                 SubscriptionEndpoint = "http://localhost/" + Guid.NewGuid()
             }.AssertValidLicense());
@@ -98,7 +98,7 @@ namespace Rhino.Licensing.Tests
 
             host.Open();
 
-            Assert.DoesNotThrow(() => new LicenseValidator(public_only, path)
+            Assert.DoesNotThrow(() => new LicenseValidator(new DebugLogService(), public_only, path)
             {
                 SubscriptionEndpoint = address
             }.AssertValidLicense());
@@ -125,7 +125,7 @@ namespace Rhino.Licensing.Tests
 
             host.Open();
 
-            Assert.Throws<LicenseExpiredException>(() => new LicenseValidator(public_only, path)
+            Assert.Throws<LicenseExpiredException>(() => new LicenseValidator(new DebugLogService(), public_only, path)
             {
                 SubscriptionEndpoint = address
             }.AssertValidLicense());
@@ -150,7 +150,7 @@ namespace Rhino.Licensing.Tests
             var tempFileName = Path.GetTempFileName();
             try
             {
-                var stringLicenseValidator = new StringLicenseValidator(BaseLicenseTest.public_only, previousLicense);
+                var stringLicenseValidator = new StringLicenseValidator(new DebugLogService(), BaseLicenseTest.public_only, previousLicense);
                 if (stringLicenseValidator.TryLoadingLicenseValuesFromValidatedXml() == false)
                     throw new InvalidOperationException("Invalid license provided");
                 return new LicenseGenerator(BaseLicenseTest.public_and_private).Generate(stringLicenseValidator.Name,
